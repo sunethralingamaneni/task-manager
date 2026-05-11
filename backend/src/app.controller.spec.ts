@@ -1,22 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from '@nestjs/common';
+import { AuthModule } from './auth/auth.module';
+import { ProjectsModule } from './projects/projects.module';
+import { TasksModule } from './tasks/tasks.module';
+import { PrismaService } from './prisma/prisma.service';
 
-describe('AppController', () => {
-  let appController: AppController;
-
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
-    }).compile();
-
-    appController = app.get<AppController>(AppController);
-  });
-
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
-    });
-  });
-});
+@Module({
+  imports: [AuthModule, ProjectsModule, TasksModule],
+  providers: [PrismaService],
+})
+export class AppModule {}
